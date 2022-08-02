@@ -1,0 +1,27 @@
+// custom menu function
+function onOpen() {
+var ui = SpreadsheetApp.getUi();
+ui.createMenu('Custom Menu')
+.addItem('Save Data','saveData')
+.addToUi();
+}
+var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Gavin own wallet");
+var date = Utilities.formatDate(new Date(), "GMT+8", "dd/MM/yyyy HH:mm:ss")
+sheet.getRange(1,4).setValue(date)
+
+var DebankTemplate = "https://openapi.debank.com/v1/user/total_balance?id=";
+
+
+for (var i=1; i<=20; i++){
+  var DebankFullAdd = DebankTemplate + sheet.getRange(i,2).getValue();
+  var networth = getNetworthX()
+  sheet.getRange(i,3).setValue(networth);
+  //Logger.log(networth);
+}
+
+function getNetworthX() {
+var response = UrlFetchApp.fetch(DebankFullAdd);
+var dataX = JSON.parse(response.getContentText())
+return dataX.total_usd_value
+// Logger.log(data.total_usd_value);
+}
