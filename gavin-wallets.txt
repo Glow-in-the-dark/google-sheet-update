@@ -25,3 +25,4 @@ var dataX = JSON.parse(response.getContentText())
 return dataX.total_usd_value
 // Logger.log(data.total_usd_value);
 }
+// Additional test
